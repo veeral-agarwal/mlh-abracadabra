@@ -78,25 +78,25 @@ router.post('/edit_applicant_profile', (req, res) => {
 
 
 // rate an applicant by recruiter
-router.post("/rate_applicant_by_recruiter",(req,res) => {
+router.post("/rate_an_applicant",(req,res) => {
+    console.log(req)
     var email = req.body.email;
     var query = { email: email };
-    var set = { $inc: { rate_count: 1 } };
+    var set = {   rate_count: req.body.rate_count , rating:req.body.rating  };
     Applicant.updateOne(query , set , function(err , resp){
         if (err) throw err;
     })
     .then(resp => {
-        var sett = { $divide: [ { $inc: {rating: req.body.value} } , resp.data.rate_count ]};
-        Applicant.updateOne(query , sett , function(err,respon){
-            if(err) throw err;  
-        })
+        // var sett = { $divide: [ { $inc: {rating: req.body.value} } , resp.data.rate_count ]};
+        // Applicant.updateOne(query , sett , function(err,respon){
+        //     if(err) throw err;  
+        // })
         console.log(resp.applicant_email)
         res.status(200).json(resp);
         console.log(resp);
         return resp;
     })
 });
-
 //increment application count of applicant 
 router.post("/increment_application_count",(req,res) => {
     var email = req.body.email;
