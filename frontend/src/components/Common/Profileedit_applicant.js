@@ -65,15 +65,34 @@ export default class Profileedit_recruiter extends React.Component {
     }
 
     onChangeimage(event) {
-        this.setState({ image: event.target.value });
+        this.setState({ image: event.target.files[0] });
+        const formData = new FormData();
+        formData.append('file', event.target.files[0]);
+            axios.post('http://localhost:4000/applicant/addfile?type=image&email=' + localStorage.getItem('user_email'), formData)
+            .then(res => {
+                console.log(res.json);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     onChangecv(event){
         this.setState({cv : event.target.value});
+        const formData = new FormData();
+        formData.append('file', event.target.files[0]);
+            axios.post('http://localhost:4000/applicant/addfile?type=cv&email=' + localStorage.getItem('user_email'), formData)
+            .then(res => {
+                console.log(res.json);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     onChangestartyear(event){
         this.setState({startyear : event.target.value});
+        
     }
 
     onChangeinstitution(event){
@@ -161,7 +180,17 @@ export default class Profileedit_recruiter extends React.Component {
                 })
                 .catch(function(error) {
                     console.log(error);
-                })
+                });
+            
+            // if(newrec.image != ''){
+            //     axios.post('http://localhost:4000/applicant/addfile?type=image&email=' + newrec.email, newrec.image )
+            //     .then(res => {
+            //         console.log(res.json);
+            //     })
+            //     .catch(err => {
+            //         console.log(err);
+            //     })
+            // }
             // }
             // else{
             //     alert("number format is wrong or bio is too big (keep it under 251 words)")

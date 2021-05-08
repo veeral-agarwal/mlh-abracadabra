@@ -222,7 +222,7 @@ export default class Register extends Component {
     onChangeimage = e => {
 		const vivi = new FileReader();
 		vivi.onload = function() {
-			this.setState({ image: vivi.result });
+			this.setState({ image: e.target.files[0] });
 		}.bind(this);
 		vivi.readAsDataURL(e.target.files[0]);
 	};
@@ -232,7 +232,7 @@ export default class Register extends Component {
 		vivi.onload = function() {
 			this.setState({ cv: vivi.result });
 		}.bind(this);
-		vivi.readAsDataURL(e.target.files[0]);
+        vivi.readAsDataURL(e.target.files[0]);
 	};
 
     onSubmitEdu(e){
