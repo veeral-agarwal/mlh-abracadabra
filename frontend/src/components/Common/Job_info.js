@@ -155,7 +155,7 @@ export default class Job_info extends Component {
                     skills: this.state.applicant_data.list_of_languages,
                     education: this.state.applicant_data.education,
                     job_type:this.state.job.type_of_job,
-                    rating: this.state.applicant_data.rating,
+                    // rating: this.state.applicant_data.rating,
                 }
                 console.log(yoyo);
                 await axios.post('http://localhost:4000/application/addapplication', yoyo)

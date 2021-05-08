@@ -24,7 +24,6 @@ router.post("/addapplication",(req,res) => {
         skills_applicant: req.body.skills,
         education_applicant: req.body.education,
         job_type: req.body.job_type,
-        applicant_rating:req.body.rating
     });
     lol.save()
     .then(resp => {

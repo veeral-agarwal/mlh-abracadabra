@@ -21,10 +21,12 @@ import Job_application_info from './components/Common/job_application_info_rec';
 import Edit_job from './components/Common/Edit-job';
 import My_employees from './components/Common/my_employees';
 import Rate_applicant from './components/Common/rate_my_employee';
+import Particles from 'react-particles-js';
 
 
 class App extends React.Component{
   render(){
+    
     let user_type = localStorage.getItem('user_type');
     let navbar = null;
     console.log(user_type);
@@ -41,6 +43,7 @@ class App extends React.Component{
       navbar = <Navbar/>
     }
     return (
+      
       <Router>
         <div className="container">
           {navbar}

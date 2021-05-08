@@ -9,14 +9,15 @@ export default class Applicant_navbar extends Component {
     }
 
     render() {
+        var name = localStorage.getItem("user_name")
         return (
             <div>                
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav mr-auto">
                             <li className="navbar-item">
-                                <Link to="/" className="nav-link" onClick={() => {localStorage.clear();
-                                window.location.href="/";}}>Logout</Link>
+                                <Link to="/login" className="nav-link" onClick={() => {localStorage.clear();
+                                window.location.href="/login";}}>Logout</Link>
                             </li>
                             <li className="navbar-item">
                                 <Link to="/profileedit_applicant" className="nav-link">My applicant Profile</Link>
@@ -31,6 +32,7 @@ export default class Applicant_navbar extends Component {
                             </li>
 
                         </ul>
+                        <h4 style={{color : "white"}}>HI {name}</h4>
                     </div>
                 </nav>
             </div>

@@ -11,6 +11,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class Register extends Component {
     
@@ -34,7 +35,8 @@ export default class Register extends Component {
             startyear:'',
             endyear:'',
             image:'',
-            cv:''
+            cv:'',
+            success:0
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -166,19 +168,23 @@ export default class Register extends Component {
                             console.log("lololol");
                             axios.post('http://localhost:4000/recruiter/recruiter/add', newUser)
                             .then(res => {alert("Created recruiter\t" + res.data.name);console.log(res.data)
+                            this.setState({success:1})
+                            console.log("sucess updated")
                             })
                             .catch(err => { 
                                 console.log(err) 
                             });
                         }
                         else{
-                            alert("contact number length is short or bio is too long keep it under 250 words");
+                            alert("contact number length is invalid or bio is too long keep it under 250 words");
                         }
                     }
                     else if(this.state.type === "applicant"){
                         if(this.state.list_of_languages !== ''){
                             axios.post('http://localhost:4000/applicant/applicant/add', newUser)
                             .then(res => {alert("Created applicant\t" + res.data.name);console.log(res.data)
+                            this.setState({success:1})
+                            console.log("sucess updated")
                             })
                             .catch(err => { 
                                 console.log(err) 
@@ -217,12 +223,13 @@ export default class Register extends Component {
         .catch(err => { 
             console.log(err) 
         });
+        console.log(this.state.success)
     }
 
     onChangeimage = e => {
 		const vivi = new FileReader();
 		vivi.onload = function() {
-			this.setState({ image: e.target.files[0] });
+			this.setState({ image: vivi.result });
 		}.bind(this);
 		vivi.readAsDataURL(e.target.files[0]);
 	};
@@ -232,7 +239,7 @@ export default class Register extends Component {
 		vivi.onload = function() {
 			this.setState({ cv: vivi.result });
 		}.bind(this);
-        vivi.readAsDataURL(e.target.files[0]);
+		vivi.readAsDataURL(e.target.files[0]);
 	};
 
     onSubmitEdu(e){
@@ -273,7 +280,7 @@ export default class Register extends Component {
                     />
                     <form>
                         <div className="form-group">
-                            <h3>add education</h3>
+                            <h4>Add Education</h4>
                             <label>Institution: </label>
                             <input type="text" 
                                className="form-control" 
@@ -281,13 +288,13 @@ export default class Register extends Component {
                                onChange={this.onChangeInstitution}
                             />  
                             <label>Start Year: </label>
-                            <input type="text" 
+                            <input type="date" 
                             className="form-control" 
                             value={this.state.startyear}
                             onChange={this.onChangeStartyear}
                             />
                             <label>End Year: </label>
-                            <input type="text" 
+                            <input type="date" 
                                className="form-control" 
                                value={this.state.endyear}
                                onChange={this.onChangeEndyear}
@@ -334,20 +341,25 @@ export default class Register extends Component {
                     <input type="number" 
                         className="form-control" 
                         value={this.state.contact_number}
+                        placeholder="10 digits"
                         onChange={this.onChangecontactnumber}
+                        maxLength="10"
                         />  
                 </div>
                 <div className="form-group">
                 <label>bio: </label>
                 <input type="text" 
                     className="form-control" 
+                    placeholder="max 250 words"
                     value={this.state.bio_recruiter}
                     onChange={this.onChangebio_recruiter}
+
                     />  
                 </div>
             </div>
         }
         return (
+            this.state.success == 1 ? window.location.href='/login' :
             <Container  component="main" maxWidth="xs">
                 <CssBaseline /> 
                 <div className="form-group"/>
@@ -395,12 +407,14 @@ export default class Register extends Component {
                             </div>
                         </div>
                         <div>
-                            {divi}
+                        { divi }
                         </div>
                         <div className="form-group">
                             <input type="submit" value="Register" className="btn btn-primary"/>
+                            
                         </div>
                     </form>
+                    
                 </div>
             </Container>
         )
