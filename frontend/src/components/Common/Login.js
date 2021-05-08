@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 // import TextField from 'material-ui/TextField';
 // import getMuiTheme from 'material-ui/styles/getMuiTheme'
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -89,7 +90,7 @@ export default class Login extends Component {
                         <button type="submit" className="btn btn-warning" style={{marginLeft: "0px"}}>Login</button>
                     </div>
                     <div><br></br>
-                    <a href="http://localhost:3000/register">Don't have a account? SignUp</a>    
+                    <Link to="/register" className="nav-link">Don't have a account? SignUp</Link>     
                     </div>
                 </form>
             </div>
