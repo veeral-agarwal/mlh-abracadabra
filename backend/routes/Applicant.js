@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+const multer = require("multer");
+const path = require("path");
 const Applicant = require("../models/applicants");
 
 router.get("/s", function(req, res) {
@@ -59,7 +61,7 @@ router.post('/edit_applicant_profile', (req, res) => {
         name: req.body.name,
         list_of_languages: req.body.list_of_languages,
         education: req.body.education,
-        image: req.body.image,
+        // image: req.body.image,
         cv:req.body.cv
     }}
     Applicant.updateOne(query , set, function(err, resp){
@@ -122,51 +124,35 @@ router.post("/decrement_application_count",(req,res) => {
     .then(resp => {
         console.log(resp.applicant_email)
         res.status(200).json(resp);
-        console.log(resp);
+        // console.log(resp);
         return resp;
     })
 });
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "public/" + req.query.type);
+    },
+    filename: function (req, file, cb) {
+        // this is where the book receives its distinct file_name structure
+        fileName = req.query.email + path.extname(file.originalname);
+      cb(
+        null,
+        fileName
+      );
+    },
+  });
+  
+  // renaming the multer function as upload
+  var upload = multer({ storage: storage });
+
 // send request with parameter id to add the cv
-router.post("/addpdf",(req,res)=>{
-    let userid = req.query.id
-    let response={
-        status:'100',
-        success:'',
-        msg:'',
-        type:'',
-    }
-    var pp = req.files.dp
-    var ext = pp.name.split('.').pop(); 
-    if(ext!=='pdf')
-    {
-        console.log(err)
-        console.log("Failed")
-        response.status="401";
-        response.success=false;
-        response.msg="file must be .pdf";
-        return res.json(response)
-    }
-    var imgname = userid +'.'+ ext
-    console.log(imgname)
-    pp.mv('public/cv/'+imgname,function(err,imgg){
-        if(err)
-        {
-            console.log(err)
-            console.log("Failed adding cv")
-            response.status="401";
-            response.success=false;
-            response.msg="Failed to update pdf";
-            return res.json(response)
-        }
-        else{
-            console.log("added cv")
-            response.status="201";
-            response.success=true;
-            response.msg="pdf added";
-            return res.json(response)
-        }
-    })
+router.post("/addfile", upload.single('file'), (req,res)=>{
+    console.log("adding file");
+    let userid = req.query.email;
+    let type = req.query.type;
+    console.log("got this ", userid, type);
+    res.status(200).send();
 });
 
 module.exports = router;
