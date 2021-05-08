@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connection to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/' + DB_NAME, { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://palash:spaceword@cluster0.ofm4x.mongodb.net/mlh-abracadabra?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully !");

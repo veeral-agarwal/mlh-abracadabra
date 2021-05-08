@@ -127,5 +127,46 @@ router.post("/decrement_application_count",(req,res) => {
     })
 });
 
+// send request with parameter id to add the cv
+router.post("/addpdf",(req,res)=>{
+    let userid = req.query.id
+    let response={
+        status:'100',
+        success:'',
+        msg:'',
+        type:'',
+    }
+    var pp = req.files.dp
+    var ext = pp.name.split('.').pop(); 
+    if(ext!=='pdf')
+    {
+        console.log(err)
+        console.log("Failed")
+        response.status="401";
+        response.success=false;
+        response.msg="file must be .pdf";
+        return res.json(response)
+    }
+    var imgname = userid +'.'+ ext
+    console.log(imgname)
+    pp.mv('public/cv/'+imgname,function(err,imgg){
+        if(err)
+        {
+            console.log(err)
+            console.log("Failed adding cv")
+            response.status="401";
+            response.success=false;
+            response.msg="Failed to update pdf";
+            return res.json(response)
+        }
+        else{
+            console.log("added cv")
+            response.status="201";
+            response.success=true;
+            response.msg="pdf added";
+            return res.json(response)
+        }
+    })
+});
 
 module.exports = router;
