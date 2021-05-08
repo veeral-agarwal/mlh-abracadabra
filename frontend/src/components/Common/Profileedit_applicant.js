@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import Card from '@material-ui/core/Card'
 // import React, {Component} from 'react';
 // import axios from 'axios';
 import bcrypt from 'bcryptjs';
@@ -250,6 +251,9 @@ export default class Profileedit_recruiter extends React.Component {
     render() {
         return (
             <div>
+                <Card>
+                    <img src={'http://localhost:4000/image/' + localStorage.getItem('user_email') + '.jpg'} width='300'/>
+                </Card>
                 <div className="form-group">
                     <label>name : </label>
                     <input type="text" 
@@ -318,7 +322,9 @@ export default class Profileedit_recruiter extends React.Component {
                         </div>
                     </form>
                 </div>
-
+                <div>
+                <iframe src={'http://localhost:4000/cv/' + localStorage.getItem('user_email') + '.pdf#zoom=FitH'} width="400" height="533"> </iframe>
+                </div>
             </div>
         )
     }

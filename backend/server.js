@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const mongoose = require('mongoose');
 const PORT = 4000;
 const DB_NAME = "tutorial"
@@ -15,6 +16,8 @@ var JobRouter=require("./routes/Jobs");
 var ApplicationRouter=require("./routes/application");
 var ApplicantRouter=require("./routes/Applicant");
 
+app.use('/image',express.static(path.join(__dirname, 'public/image')));
+app.use('/cv',express.static(path.join(__dirname, 'public/cv')));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
