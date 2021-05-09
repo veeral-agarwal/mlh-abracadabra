@@ -209,7 +209,7 @@ export default class Profileedit_recruiter extends React.Component {
         return (
             <div>
                 <Card>
-                    <img src={'http://localhost:4000/image/' + localStorage.getItem('user_email') + '.jpg'} width='300'/>
+                    <img src={'http://localhost:4000/image/' + localStorage.getItem('user_image')} width='300'/>
                 </Card>
                 <div className="form-group">
                     <label>name : </label>

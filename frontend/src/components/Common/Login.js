@@ -43,13 +43,28 @@ export default class Login extends Component {
             console.log(res);
             if (res.data.email===userAdd.email && temper) {
                 alert("hii");
+                console.log(res.data);
                 localStorage.setItem('user_type', res.data.type);
                 localStorage.setItem('user_name', res.data.name);
                 localStorage.setItem('user_id',res.data._id);
                 localStorage.setItem('isloggedin',true);
                 localStorage.setItem('user_email', res.data.email);
-                this.props.history.push("/");
-                window.location.reload();
+                if(res.data.type == 'applicant'){
+                    const temp = {
+                        applicant_ka_email: res.data.email
+                    };
+                    axios.post('http://localhost:4000/applicant/get_an_applicant_by_email', temp).then((res) => {
+                    console.log(res.data, 'is the data');    
+                    localStorage.setItem('user_image', res.data.image);
+                        console.log("this is the image we wanted ", localStorage.getItem('user_image'));
+                        window.location = '/';
+
+                    }).catch(err => {
+                        console.log(res);
+                        console.log(err);
+                    });
+                }
+                // this.props.history.push("/");
             }
             else {
                 alert("Invalid Password")
