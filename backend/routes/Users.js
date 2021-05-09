@@ -37,6 +37,22 @@ router.get("/user", function(req, res) {
 //         res.status(400).send(err);
 //     });
 // });
+router.post("/updateuser", (req, res) => {
+    console.log(req.body.email)
+    console.log(req.body.name)
+    var query = { email:req.body.email };
+    var set = { $set:{
+        name: req.body.name,
+    }}
+    User.updateOne(query , set, function(err, resp){
+        if (err) throw err;
+    })
+    .then(resp => {
+        res.status(200).json(resp);
+        console.log(resp);
+        
+});
+})
 
 
 
