@@ -26,9 +26,9 @@ router.post("/get_an_applicant_by_email",(req,res) => {
         if (err) throw err;
     })
     .then(resp => {
-        res.status(200).json(resp);
-        console.log(resp);
-        return resp;
+        res.status(200).json(resp).send();
+        console.log('get_an_applicant_by_email ka response is ', resp);
+        // return resp;
     })
 });
 
@@ -136,6 +136,13 @@ var storage = multer.diskStorage({
     filename: function (req, file, cb) {
         // this is where the book receives its distinct file_name structure
         fileName = req.query.email + path.extname(file.originalname);
+        if(req.query.type == 'image'){
+            Applicant.updateOne({email:req.query.email}, {
+                $set: {image: fileName}
+            }, err => {
+                console.log(err);
+            }); 
+        }
       cb(
         null,
         fileName
