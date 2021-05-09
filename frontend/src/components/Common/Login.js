@@ -63,6 +63,8 @@ export default class Login extends Component {
                         console.log(res);
                         console.log(err);
                     });
+                } else {
+                    window.location = '/';
                 }
                 // this.props.history.push("/");
             }
