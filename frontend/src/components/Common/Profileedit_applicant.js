@@ -21,17 +21,7 @@ export default class Profileedit_recruiter extends React.Component {
         super(props);
 
         this.state = {
-            // title: '',
-            // name_recrutier: '',
-            // email_recruiter: '',
-            // max_applications: '',
-            // max_positions: '',
-            // deadline_of_application: '', //take input as string (day month year hour minutes).
-            // required_skills: '',
-            // type_of_job: 'full_time',
-            // duration: '0',
-            // salary_per_month: '',
-            // date_of_posting: Date.now()
+         
             list_of_languages:'',
             education: [],
             institution:'',
@@ -42,14 +32,7 @@ export default class Profileedit_recruiter extends React.Component {
             // contact_number:'',
             name:''
         }
-        // this.onChangetitle = this.onChangetitle.bind(this);
-        // this.onChangemax_applications = this.onChangemax_applications.bind(this);
-        // this.onChangemax_positions = this.onChangemax_positions.bind(this);
-        // this.onChangedeadline_of_application = this.onChangedeadline_of_application.bind(this);
-        // this.onChangerequired_skills = this.onChangerequired_skills.bind(this);
-        // this.onChangetype_of_job = this.onChangetype_of_job.bind(this);
-        // this.onChangeduration = this.onChangeduration.bind(this);
-        // this.onChangesalary_per_month = this.onChangesalary_per_month.bind(this);
+        
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangelist_of_languages = this.onChangelist_of_languages.bind(this);
         this.onChangeimage = this.onChangeimage.bind(this);
@@ -107,55 +90,31 @@ export default class Profileedit_recruiter extends React.Component {
     onChangename(event){
         this.setState({name: event.target.value});
     }
+    componentDidMount()
+    {   
+        console.log(localStorage)
+        var mail=localStorage.getItem("user_email")
+        console.log(mail)
+        axios.post('http://localhost:4000/applicant/get_an_applicant_by_email',{"applicant_ka_email":mail})
+        .then(res => {this.setState({user:res.data})
+        console.log(this.state.user)
+        this.setState({name:this.state.user.name})
+        this.setState({email:this.state.user.email})
+        this.setState({education:this.state.user.education})
+        this.setState({list_of_languages:this.state.user.list_of_languages})
+     
 
-    // onChangemax_positions(event) {
-    //     this.setState({ max_positions: event.target.value });
-    // }
-
-    // onChangedeadline_of_application(event) {
-    //     this.setState({ deadline_of_application: event.target.value });
-    // }
-
-    // onChangerequired_skills(event) {
-    //     this.setState({ required_skills: event.target.value });
-    // }   
-
-    // onChangetype_of_job(event) {
-    //     this.setState({ type_of_job: event.target.value });
-    // }
-
-    // onChangeduration(event) {
-    //     this.setState({ duration: event.target.value });
-    // }
-
-    // onChangesalary_per_month(event) {
-    //     this.setState({ salary_per_month: event.target.value });
-    // }
-
+    })
+   
+    };
+  
     onSubmit(e) {
         e.preventDefault();
         console.log("lol")
         const newrec = {
-            // title: this.state.title,
-            // max_applications: this.state.max_applications,
-            // max_positions:  this.state.max_positions,
-            // deadline_of_application: Date(this.state.deadline_of_application),
-            // required_skills: this.state.required_skills,
-            // type_of_job: this.state.type_of_job,
-            // duration: this.state.duration,
-            // salary_per_month: this.state.salary_per_month,
-            // name_recruiter: localStorage.getItem('user_name'),
-            // email_recruiter: localStorage.getItem('user_email'),
-            // date_of_posting: Date.now()
-            // bio: this.state.bio,
-            // contact_number: this.state.contact_number,
-            // email : localStorage.getItem("user_email"),
-            // name: this.state.name,
+            
             list_of_languages:this.state.list_of_languages,
             education: this.state.education,
-            // institution:'',
-            // startyear:'',
-            // endyear:'',
             email: localStorage.getItem('user_email'),
             image:this.state.image,
             cv:this.state.cv,
@@ -178,10 +137,21 @@ export default class Profileedit_recruiter extends React.Component {
                 .then(res => {
                     alert("profile successfully edited");
                     console.log(res.data)
+
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
+                axios.post('http://localhost:4000/user/updateuser',newrec)
+                .then(res => {
+                    
+                    console.log(res.data)
+                    localStorage.setItem('user_name', this.state.name);
+                    console.log(localStorage)
+                })
+                .catch(function(error) {
+                    console.log(error);
+                })
             
             // if(newrec.image != ''){
             //     axios.post('http://localhost:4000/applicant/addfile?type=image&email=' + newrec.email, newrec.image )
@@ -198,20 +168,7 @@ export default class Profileedit_recruiter extends React.Component {
             // }
         }
         this.setState({
-            // title: '',
-            // name_recrutier: '',
-            // email_recruiter: '',
-            // max_applications: '',
-            // max_positions: '',
-            // deadline_of_application: '', 
-            // required_skills: '',
-            // type_of_job: 'full_time',
-            // duration: '0',
-            // salary_per_month: '',
-            // date_of_posting: Date.now()
-            // bio: '',
-            // contact_number: '',
-            // name:'',
+           
             list_of_languages:'',
             education: [],
             institution:'',
@@ -273,19 +230,19 @@ export default class Profileedit_recruiter extends React.Component {
                             <label>Institution: </label>
                             <input type="text" 
                                className="form-control" 
-                               value={this.state.institution}
+                               value={this.state.education.length ==0 ? console.log("yes"):this.state.education[0].institution}
                                onChange={this.onChangeinstitution}
                             />  
                             <label>Start Year: </label>
                             <input type="text" 
                             className="form-control" 
-                            value={this.state.startyear}
+                            value={this.state.education.length ==0 ? console.log("yes"):this.state.education[0].startyear}
                             onChange={this.onChangestartyear}
                             />
                             <label>End Year: </label>
                             <input type="text" 
                                className="form-control" 
-                               value={this.state.endyear}
+                               value={this.state.education.length ==0 ? console.log("yes"):this.state.education[0].endyear}
                                onChange={this.onChangeendyear}
                             />
                             <div className="form-group">

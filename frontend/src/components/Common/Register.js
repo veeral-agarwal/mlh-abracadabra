@@ -34,7 +34,8 @@ export default class Register extends Component {
             startyear:'',
             endyear:'',
             image:'',
-            cv:''
+            cv:'',
+            success:0
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -166,6 +167,8 @@ export default class Register extends Component {
                             console.log("lololol");
                             axios.post('http://localhost:4000/recruiter/recruiter/add', newUser)
                             .then(res => {alert("Created recruiter\t" + res.data.name);console.log(res.data)
+                            this.setState({success:1})
+                            console.log("sucess updated")
                             })
                             .catch(err => { 
                                 console.log(err) 
@@ -179,6 +182,8 @@ export default class Register extends Component {
                         if(this.state.list_of_languages !== ''){
                             axios.post('http://localhost:4000/applicant/applicant/add', newUser)
                             .then(res => {alert("Created applicant\t" + res.data.name);console.log(res.data)
+                            this.setState({success:1})
+                            console.log("sucess updated")
                             })
                             .catch(err => { 
                                 console.log(err) 
@@ -348,6 +353,7 @@ export default class Register extends Component {
             </div>
         }
         return (
+            this.state.success == 1 ? window.location.href='/login' :
             <Container  component="main" maxWidth="xs">
                 <CssBaseline /> 
                 <div className="form-group"/>
