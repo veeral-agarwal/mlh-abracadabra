@@ -301,28 +301,28 @@ export default class Register extends Component {
                             <div className="form-group">
                                 <input type="submit" value="ADD" className="btn btn-primary" onClick={this.onSubmitEdu}/>
                             </div>
-                            <label>Select profile photo:</label>
+                            {/* <label>Select profile photo:</label> */}
                             {/* <br></br>
                             <br></br> */}
-                                <input
+                                {/* <input
                                     type="file"
                                     onChange={this.onChangeimage}
                                     // value={this.state.image}
                                     id="image"
                                     name="image"
-                                ></input>
+                                ></input> */}
                             </div>
                             <div className="form-group">
-                            <label>upload cv</label>
+                            {/* <label>upload cv</label> */}
                             {/* <br></br>
                             <br></br> */}
-                                <input
+                                {/* <input
                                     type="file"
                                     onChange={this.onChangecv}
                                     // value={this.state.image}
                                     id="file"
                                     name="file"
-                                ></input>
+                                ></input> */}
                             </div>
                             
                         </div>

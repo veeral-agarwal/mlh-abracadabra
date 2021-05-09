@@ -14,6 +14,12 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+var cardStyle = {
+    display: 'disk',
+    width: '15vw',
+    transitionDuration: '0.3s',
+    height: '20vw'
+}
 
 export default class Profileedit_recruiter extends React.Component {
     
@@ -181,6 +187,8 @@ export default class Profileedit_recruiter extends React.Component {
         });
     }
 
+  
+
     onSubmitEdu(e){
         e.preventDefault();
         const obj = {
@@ -208,8 +216,8 @@ export default class Profileedit_recruiter extends React.Component {
     render() {
         return (
             <div>
-                <Card>
-                    <img src={'http://localhost:4000/image/' + localStorage.getItem('user_image')} width='300'/>
+                <Card style={cardStyle}>
+                    <img src={'http://localhost:4000/image/' + localStorage.getItem('user_image')} width='300' height='400'/>
                 </Card>
                 <div className="form-group">
                     <label>name : </label>
